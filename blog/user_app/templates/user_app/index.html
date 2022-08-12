@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html>
+
+    {% include  "head.html" %}
+
+    <body>
+        {% include  "navbar.html" %}
+
+        <h1>Publicaciones</h1>
+        <ul>
+        {% for post in context %}
+            <li>{{ post.title}}</li>
+        {% empty %}
+            <li>No post yet.</li>
+        {% endfor %}
+        </ul>
+    </body>
+</html>
