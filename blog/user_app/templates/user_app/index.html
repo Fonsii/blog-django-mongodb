@@ -1,75 +1,101 @@
-{% load custom_tag %}
-
 <!DOCTYPE html>
 
 <html>
-
     {% include  "head.html" %}
 
     <body>
-        {% include  "navbar.html" %}
+        {% include "navbar.html" %}
+        <br>
+        <div class="panel">
+            <div class="text-center">
+                <h1>Publicaciones</h1>
+            </div>
+        </div>
 
-        <h1>Publicaciones</h1>
-        <ul>
-        {% for post in context %}
-            <li>{{ post.title}}</li>
-        {% empty %}
-            <li>No post yet.</li>
-        {% endfor %}
-        </ul>
-
-        {% if page_obj.has_other_pages %}
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    {% if page_obj.has_previous %}
-                        <li class="page-item" id="arrow-left">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                                    <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                                </svg>
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled" id="arrow-left">
-                            <a class="page-link">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                                    <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                                </svg>
-                            </a>
-                        </li>
-                    {% endif %}
-
-                    {% for page in page_obj.paginator.page_range %}
-                        {% if page_obj.number == page %}
-                            <li class="page-item active"><a class="page-link">{{ page }}</a></li>
-                        {% else %}
-                            <li class="page-item"><a class="page-link" href="?page={{page}}"> {{page}}</a></li>
-                        {% endif %}
+        <section class="container">
+            <div class="row">
+                <div class="col-sm-9">
+                    {% for post in context %}
+                        <a href = "{% url 'detail' pk=post.id %}" style="text-decoration: none; color: inherit;">
+                            <article class="blog-post">  
+                                <h3 class="font-weight-bold">{{post.title}} <small class="font-weight-normal">{{post.created_at}}</small></h3>
+                                <div class="panel">
+                                    <ul class="">
+                                        Autor: {{post.author}}
+                                    </ul>
+                                </div>
+                                <p class="font-weight-light">
+                                    {% if post.text|length > 150 %}
+                                        {{ post.text|truncatechars:151 }}... 
+                                        <a href = "{% url 'detail' pk=post.id %}">
+                                            Ver más
+                                        </a>
+                                    {% else %}
+                                        {{ post.text }}
+                                    {% endif %}
+                                </p>
+                            </article>
+                        </a>
+                        
+                    {% empty %}
+                        <li>No post yet.</li>
                     {% endfor %}
-            
-                    {% if page_obj.has_next %}
-                        <li class="page-item" id="arrow-left">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-                                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-                                </svg>  
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled" id="arrow-left">
-                            <a class="page-link">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-                                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-                                </svg>  
-                            </a>
-                        </li>
+
+                    {% if page_obj.has_other_pages %}
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item" id="arrow-left">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                                <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled" id="arrow-left">
+                                        <a class="page-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                                <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% for page in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == page %}
+                                        <li class="page-item active"><a class="page-link">{{ page }}</a></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{page}}"> {{page}}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                        
+                                {% if page_obj.has_next %}
+                                    <li class="page-item" id="arrow-left">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                            </svg>  
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled" id="arrow-left">
+                                        <a class="page-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                            </svg>  
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
                     {% endif %}
-                </ul>
-            </nav>
-        {% endif %}
+                </div>
+            </div>
+        </section>
     </body>
 </html>
