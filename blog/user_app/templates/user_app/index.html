@@ -11,13 +11,16 @@
                 <h1>Publicaciones</h1>
             </div>
         </div>
-
+        <br>    
         <section class="container">
             <div class="row">
-                <div class="col-sm-9">
+                <div class="col-sm-10" style="margin:auto;">
                     {% for post in context %}
                         <a href = "{% url 'detail' pk=post.id %}" style="text-decoration: none; color: inherit;">
-                            <article class="blog-post">  
+                            <img src="{{post.photo.url}}" class="img-thumbnail" alt="{{post.title}}" style="width: 850px; height: 350px;">
+                            <br>
+                            <br>
+                            <article class="blog-post" style="margin-left: 4%;">  
                                 <h3 class="font-weight-bold">{{post.title}} <small class="font-weight-normal">{{post.created_at}}</small></h3>
                                 <div class="panel">
                                     <ul class="">
@@ -36,7 +39,7 @@
                                 </p>
                             </article>
                         </a>
-                        
+                        <br>
                     {% empty %}
                         <li>No post yet.</li>
                     {% endfor %}
