@@ -5,7 +5,7 @@
 </p>
 
 
-This is a simple blog build in django using MOngoDB as database
+This is a simple blog build in django using MongoDB as database
 
 <p align="center" width="100%">
     <img width="33%" src="https://github.com/Fonsii/blog-django-mongodb/blob/main/resources/readme_utils/web_blog_main_page.png"> 
