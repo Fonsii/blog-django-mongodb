@@ -1,4 +1,4 @@
-# PyGame_Snake
+# Django Blog
 <p align="center">
   <a href="https://github.com/Fonsii/blog-django-mongodb/blob/main/README.md">English</a>  |
   <span>Español</span>
@@ -18,13 +18,18 @@ Abrir archivo
 
     cd blog-django-mongodb
 
-Instalar pygame
+Instalar dependencias con entorno virtual
 
     pip install django
     pip install djongo
     pip install Pillow
 
-Correr el código y divertirse!
+Antes de correr el código hay que cambiar la base de datos del archivo settings de Django y correr
+
+    py manage.py makemigrations
+    py manage.py migrate
+
+Ahora se puede correr el código y divertirse!
     
     py manage.py runserver
 

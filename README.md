@@ -1,4 +1,4 @@
-# PyGame_Snake
+# Django Blog
 <p align="center">
   <span>English</span> |
   <a href="https://github.com/Fonsii/blog-django-mongodb/blob/main/lang/spanish/README.md">Español</a>
@@ -25,8 +25,12 @@ Now, use virtual venv for dependencies
     pip install djongo
     pip install Pillow
 
+Before you run the server, have to change settings databases and run
 
-Run the code and have fun!
+    py manage.py makemigrations
+    py manage.py migrate
+
+The you can run the code and have fun!
 
     py manage.py runserver
     
